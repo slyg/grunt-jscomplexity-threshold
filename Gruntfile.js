@@ -23,29 +23,25 @@ module.exports = function(grunt) {
       }
     },
 
-    // Configuration to be run (and then tested).
     'jscomplexity-threshold': {
-
       passing : {
         src : [
           './tasks/',
-          './tmp/'
+          './test/fixtures'
         ],
         options : {
-          complexity : 2000
+          complexity : 5
         }
       },
-
       failing : {
         src : [
           './tasks/',
-          './tmp/'
+          './test/fixtures'
         ],
         options : {
-          complexity : 1000
+          complexity : 4
         }
       }
-
     }
 
   });
