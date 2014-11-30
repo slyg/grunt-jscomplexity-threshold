@@ -10,58 +10,28 @@
 
 var jscomplexity = require('jscomplexity');
 var Promise = require('bluebird');
-var colors =
+
+var normalizeScans = require('./lib/normalizeScans');
+var markThresholds = require('./lib/markThresholds');
+var displayResults = require('./lib/displayResults');
+var hasPassedThreshold = require('./lib/hasPassedThreshold');
 
 module.exports = function(grunt) {
 
-  function computeThresholdsFromScans(options){
-
-    return function(scans){
-
-      var hasError = false;
-
-      scans
-        .map(function(result){
-          return result.report;
-        })
-        .forEach(function(reports){
-
-          reports.forEach(function(report){
-
-            var isThresholdPassed = (report.complexity > options.complexity);
-
-            if (isThresholdPassed){
-              hasError = true;
-            }
-
-            var output = '%s %s'[isThresholdPassed ? 'red' : 'green'];
-
-            grunt.log.writeln(output, report.path, report.complexity);
-
-          });
-
-        })
-      ;
-
-      return hasError;
-
-    };
-
-  }
-
-  // Please see the Grunt documentation for more information regarding task
-  // creation: http://gruntjs.com/creating-tasks
-
-  grunt.registerMultiTask('jscomplexity-threshold', 'Simple javascript complexity threshold task', function() {
+  grunt.registerMultiTask(
+    'jscomplexity-threshold',
+    'Simple javascript complexity threshold task',
+    function() {
 
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options({
       complexity: 100
     });
 
+    // This is async stuff
     var done = this.async();
 
-    // Iterate over all specified file groups.
+    // Iterate over all specified file groups
     this.files.forEach(function(f) {
 
       var scans = [];
@@ -70,15 +40,21 @@ module.exports = function(grunt) {
         scans.push(jscomplexity(filepath));
       });
 
-      Promise
-        .all(scans)
-        .then(computeThresholdsFromScans(options))
-        .then(function(hasError){
-          if (hasError) {
-            throw new Error('Complexity threshold passed');
+      Promise.all(scans)
+        .then(normalizeScans)
+        .then(markThresholds(options))
+        .then(function(data){
+          return Promise.join(
+            hasPassedThreshold(data),
+            displayResults(data)
+          );
+        })
+        .spread(function(isThresholdPassed){
+          if (isThresholdPassed) {
+            grunt.fail.warn(new Error('Complexity threshold passed'));
           }
         })
-        .nodeify(done)
+        .done(done)
       ;
 
     });
