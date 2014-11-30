@@ -37,7 +37,7 @@ module.exports = function(grunt) {
       var scans = [];
 
       f.orig.src.forEach(function(filepath) {
-        scans.push(jscomplexity(filepath));
+        scans.push(jscomplexity(filepath, options.skippedDirectories));
       });
 
       Promise.all(scans)

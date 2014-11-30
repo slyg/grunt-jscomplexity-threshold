@@ -30,7 +30,7 @@ module.exports = function(grunt) {
           './test/fixtures'
         ],
         options : {
-          complexity : 5
+          complexity : 10
         }
       },
       failing : {
@@ -40,6 +40,16 @@ module.exports = function(grunt) {
         ],
         options : {
           complexity : 4
+        }
+      },
+      skipping : {
+        src : [
+          './tasks/',
+          './test/fixtures'
+        ],
+        options : {
+          complexity : 5,
+          skippedDirectories : ['skipped/']
         }
       }
     }
