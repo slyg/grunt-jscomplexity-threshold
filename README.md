@@ -1,8 +1,8 @@
-# grunt-jscomplexity-threshold
+# grunt-jscomplexity-threshold 
+
+[![Build Status](https://travis-ci.org/slyg/grunt-jscomplexity-threshold.svg?branch=master)](https://travis-ci.org/slyg/grunt-jscomplexity-threshold)
 
 This task is the grunt plugin port of [jscomplexity module](https://github.com/slyg/jscomplexity).
-
-It is still a work in progress so is not published on npm.
 
 ### Usage
 
