@@ -11,10 +11,10 @@
 var jscomplexity = require('jscomplexity');
 var Promise = require('bluebird');
 
-var normalize = require('./lib/normalize');
-var markThresholds = require('./lib/markThresholds');
-var render = require('./lib/render');
-var hasPassedThreshold = require('./lib/hasPassedThreshold');
+var normalize = require('./util/normalize');
+var markThresholds = require('./util/markThresholds');
+var render = require('./util/render');
+var hasPassedThreshold = require('./util/hasPassedThreshold');
 
 module.exports = function(grunt) {
 

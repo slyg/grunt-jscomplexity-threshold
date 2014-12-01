@@ -1,4 +1,4 @@
-_ = require('lodash')
+var _ = require('lodash');
 
 module.exports = function markThresholds (options){
 
@@ -7,7 +7,7 @@ module.exports = function markThresholds (options){
   return function(reports){
 
     if (!_.isArray(reports)){
-      throw new Error('no report array provided')
+      throw new Error('no report array provided');
     }
 
     return reports.map(function(report){

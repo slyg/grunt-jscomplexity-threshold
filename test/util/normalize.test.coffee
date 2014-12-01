@@ -3,7 +3,7 @@ expect = chai.expect
 rewire = require('rewire')
 describe 'the normalize module', ->
 
-  module = rewire('../../tasks/lib/normalize')
+  module = rewire('../../tasks/util/normalize')
 
   it 'should expose a function', ->
 
