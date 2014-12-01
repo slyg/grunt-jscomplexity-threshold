@@ -11,9 +11,9 @@
 var jscomplexity = require('jscomplexity');
 var Promise = require('bluebird');
 
-var normalizeScans = require('./lib/normalizeScans');
+var normalize = require('./lib/normalize');
 var markThresholds = require('./lib/markThresholds');
-var displayResults = require('./lib/displayResults');
+var render = require('./lib/render');
 var hasPassedThreshold = require('./lib/hasPassedThreshold');
 
 module.exports = function(grunt) {
@@ -41,15 +41,16 @@ module.exports = function(grunt) {
       });
 
       Promise.all(scans)
-        .then(normalizeScans)
+        .then(normalize)
         .then(markThresholds(options))
         .then(function(data){
           return Promise.join(
             hasPassedThreshold(data),
-            displayResults(data)
+            render(data)
           );
         })
-        .spread(function(isThresholdPassed){
+        .spread(function(isThresholdPassed, output){
+          console.log(output);
           if (isThresholdPassed) {
             grunt.fail.warn(new Error('Complexity threshold passed'));
           }
