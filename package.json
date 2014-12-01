@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/slyg/grunt-jscomplexity.git"
+    "url": "git://github.com/slyg/grunt-jscomplexity-threshold"
   },
   "bugs": {
     "url": "https://github.com/slyg/grunt-jscomplexity-threshold/issues"
