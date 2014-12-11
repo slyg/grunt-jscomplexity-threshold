@@ -8,10 +8,10 @@
 
 'use strict';
 
-var jscomplexity = require('jscomplexity');
+var analyse = require('jscomplexity').analyse;
 var Promise = require('bluebird');
+var _ = require('lodash');
 
-var normalize = require('./util/normalize');
 var markThresholds = require('./util/markThresholds');
 var render = require('./util/render');
 var hasPassedThreshold = require('./util/hasPassedThreshold');
@@ -31,34 +31,41 @@ module.exports = function(grunt) {
     // This is async stuff
     var done = this.async();
 
-    // Iterate over all specified file groups
+    var scans = [];
+
+    // Iterate over all specified file groups,
+    // create file list,
+    // push analysis promises into an array
     this.files.forEach(function(f) {
 
-      var scans = [];
-
-      f.orig.src.forEach(function(filepath) {
-        scans.push(jscomplexity(filepath, options.skippedDirectories));
+      var targets = _.filter(grunt.file.expand(f.orig.src), function(path){
+        return grunt.file.isFile(path);
       });
 
-      Promise.all(scans)
-        .then(normalize)
-        .then(markThresholds(options))
-        .then(function(data){
-          return Promise.join(
-            hasPassedThreshold(data),
-            render(data)
-          );
-        })
-        .spread(function(isThresholdPassed, output){
-          console.log(output);
-          if (isThresholdPassed) {
-            grunt.fail.warn(new Error('Complexity threshold passed'));
-          }
-        })
-        .done(done)
-      ;
+      targets.forEach(function(file){
+        scans.push(analyse(file));
+      });
 
     });
+
+    // Once promises are resolved
+    // output results
+    Promise.all(scans)
+      .then(markThresholds(options))
+      .then(function(data){
+        return Promise.join(
+          hasPassedThreshold(data),
+          render(data)
+        );
+      })
+      .spread(function(isThresholdPassed, output){
+        console.log(output);
+        if (isThresholdPassed) {
+          grunt.fail.warn(new Error('Complexity threshold passed'));
+        }
+      })
+      .done(done)
+    ;
 
   });
 

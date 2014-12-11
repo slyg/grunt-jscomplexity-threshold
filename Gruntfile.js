@@ -24,32 +24,32 @@ module.exports = function(grunt) {
     },
 
     'jscomplexity-threshold': {
-      passing : {
+      pass : {
         src : [
-          './tasks/',
-          './test/fixtures'
+          './tasks/**',
+          './test/fixtures/**'
         ],
         options : {
           complexity : 10
         }
       },
-      failing : {
+      fail : {
         src : [
-          './tasks/',
-          './test/fixtures'
+          './tasks/**',
+          './test/fixtures/**'
         ],
         options : {
           complexity : 4
         }
       },
-      skipping : {
+      skip : {
         src : [
-          './tasks/',
-          './test/fixtures'
+          './tasks/**',
+          './test/fixtures/**',
+          '!./test/fixtures/skipped/**'
         ],
         options : {
-          complexity : 5,
-          skippedDirectories : ['skipped/']
+          complexity : 5
         }
       }
     }
