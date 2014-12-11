@@ -15,7 +15,6 @@ Tip : you can take a look at this repo's `Gruntfile.js`.
 Example :
 
 ```javascript
-
 ...
 
   'jscomplexity-threshold': {
@@ -27,18 +26,20 @@ Example :
         '!test/fixtures/**'
       ],
       options : {
-        complexity : 10,        // default 100
-        maintainability : 50,   // default 20
-        lineNumber : 300        // default 4000
+        
+        quiet : true,         // display report (see screenshot), default false
+      
+        complexity : 10,      // default 100, lower is better
+        maintainability : 50, // default 20, higher is better
+        lineNumber : 300      // default 4000, lower is better
+        
       }
     },
     
     ...
-        
   }
-  
   ...
-      
+  
 ```
 
 ### Sample output
