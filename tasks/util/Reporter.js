@@ -3,9 +3,9 @@ var Table = require('cli-table');
 function Reporter(){
 
   this.table = new Table({
-    head: ['File'.white, 'Complexity'.white, 'maintainability'.white, 'lineNumber'.white],
+    head: ['File'.white, 'Complexity'.white, 'Maintainability'.white, 'Line number'.white],
     colAligns : ['left', 'right', 'right', 'right'],
-    colWidths: [70, 12, 22, 12],
+    colWidths: [70, 12, 17, 13],
     style : {
       compact : true,
       header: 'white'
