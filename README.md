@@ -12,6 +12,8 @@ This task is the grunt plugin port of [jscomplexity module](https://github.com/s
 
 Tip : you can take a look at this repo's `Gruntfile.js`.
 
+Example :
+
 ```javascript
 
 ...
@@ -20,12 +22,14 @@ Tip : you can take a look at this repo's `Gruntfile.js`.
   
     all : {
       src : [
-        './app/',                       // /!\ src paths are not using glob,
-        './test/'                       // use folders paths for now
+        'app/**',
+        'test/**',
+        '!test/fixtures/**'
       ],
       options : {
-        complexity : 10,                 // complexity threshold
-        skippedDirectories : ['vendor/'] // array of file path patterns to skip
+        complexity : 10,        // default 100
+        maintainability : 50,   // default 20
+        lineNumber : 300        // default 4000
       }
     },
     
