@@ -26,8 +26,8 @@ module.exports = function(grunt) {
     'jscomplexity-threshold': {
       pass : {
         src : [
-          './tasks/**',
-          './test/fixtures/**'
+          'tasks/**',
+          'test/fixtures/**'
         ],
         options : {
           complexity : 10
@@ -35,8 +35,8 @@ module.exports = function(grunt) {
       },
       fail : {
         src : [
-          './tasks/**',
-          './test/fixtures/**'
+          'tasks/**',
+          'test/fixtures/**'
         ],
         options : {
           complexity : 4,
@@ -45,9 +45,9 @@ module.exports = function(grunt) {
       },
       skip : {
         src : [
-          './tasks/**',
-          './test/fixtures/**',
-          '!./test/fixtures/skipped/**'
+          'tasks/**',
+          'test/fixtures/**',
+          '!test/fixtures/skipped/**'
         ],
         options : {
           complexity : 5

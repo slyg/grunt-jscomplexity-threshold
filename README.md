@@ -22,8 +22,8 @@ Example :
   
     all : {
       src : [
-        'app/**',
-        'test/**',
+        'app/**/*.js',
+        'test/**/*.js',
         '!test/fixtures/**'
       ],
       options : {
