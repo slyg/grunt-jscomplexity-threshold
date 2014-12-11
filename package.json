@@ -1,7 +1,7 @@
 {
   "name": "grunt-jscomplexity-threshold",
   "description": "Simple javascript complexity threshold task",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "https://github.com/slyg/grunt-jscomplexity-threshold",
   "author": {
     "name": "Sylvain Faucherand",
