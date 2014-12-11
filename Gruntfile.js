@@ -52,6 +52,26 @@ module.exports = function(grunt) {
         options : {
           complexity : 5
         }
+      },
+      silent_pass : {
+        src : [
+          'tasks/**',
+          'test/fixtures/**'
+        ],
+        options : {
+          complexity : 10,
+          quiet : true
+        }
+      },
+      silent_fail : {
+        src : [
+          'tasks/**',
+          'test/fixtures/**'
+        ],
+        options : {
+          complexity : 4,
+          quiet : true
+        }
       }
     }
 

@@ -25,6 +25,9 @@ module.exports = function(grunt) {
 
     // This is async stuff
     var done = this.async();
+    var options = this.options({
+      quiet: false
+    });
 
     // Iterate over all specified file groups,
     // create file list,
@@ -45,7 +48,7 @@ module.exports = function(grunt) {
     // Once promises are resolved
     // output results
     Promise.all(scans)
-      .then(markThresholds(this.options()))
+      .then(markThresholds(options))
       .then(function(data){
         return Promise.join(
           hasPassedThreshold(data),
@@ -53,7 +56,9 @@ module.exports = function(grunt) {
         );
       })
       .spread(function(isThresholdPassed, output){
-        console.log(output);
+        if (isThresholdPassed || !options.quiet) {
+          console.log(output);
+        }
         if (isThresholdPassed) {
           grunt.fail.warn(new Error('Complexity threshold passed'));
         }
