@@ -4,7 +4,7 @@ rewire = require('rewire')
 describe 'the render module', ->
 
   ReporterMock = undefined
-  module = rewire('../../tasks/util/render')
+  module = rewire('../../../tasks/util/render')
 
   VALID_SINGLE_PARAMETERS = [
     path: '/some/path/to/file.js'

@@ -3,7 +3,7 @@ expect = chai.expect
 rewire = require('rewire')
 describe 'the hasPassedThreshold module', ->
 
-  module = rewire('../../tasks/util/hasPassedThreshold')
+  module = rewire('../../../tasks/util/hasPassedThreshold')
 
   it 'should expose a function', ->
 

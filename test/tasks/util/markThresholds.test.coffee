@@ -3,7 +3,7 @@ expect = chai.expect
 rewire = require('rewire')
 describe 'the markThresholds module', ->
 
-  module = rewire('../../tasks/util/markThresholds')
+  module = rewire('../../../tasks/util/markThresholds')
 
   reports = [
     { complexity : 1 }
