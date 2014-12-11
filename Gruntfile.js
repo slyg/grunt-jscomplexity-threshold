@@ -39,7 +39,8 @@ module.exports = function(grunt) {
           './test/fixtures/**'
         ],
         options : {
-          complexity : 4
+          complexity : 4,
+          maintainability: 60
         }
       },
       skip : {

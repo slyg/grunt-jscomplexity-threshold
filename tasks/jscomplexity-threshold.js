@@ -23,19 +23,13 @@ module.exports = function(grunt) {
     'Simple javascript complexity threshold task',
     function() {
 
-    // Merge task-specific and/or target-specific options with these defaults.
-    var options = this.options({
-      complexity: 100
-    });
-
     // This is async stuff
     var done = this.async();
-
-    var scans = [];
 
     // Iterate over all specified file groups,
     // create file list,
     // push analysis promises into an array
+    var scans = [];
     this.files.forEach(function(f) {
 
       var targets = _.filter(grunt.file.expand(f.orig.src), function(path){
@@ -51,7 +45,7 @@ module.exports = function(grunt) {
     // Once promises are resolved
     // output results
     Promise.all(scans)
-      .then(markThresholds(options))
+      .then(markThresholds(this.options()))
       .then(function(data){
         return Promise.join(
           hasPassedThreshold(data),

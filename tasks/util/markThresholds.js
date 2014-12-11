@@ -1,8 +1,15 @@
 var _ = require('lodash');
 
+var defaultOptions = {
+  complexity      : 100,
+  maintainability : 20,
+  lineNumber      : 4000
+};
+
 module.exports = function markThresholds (options){
 
-  var hasOptions = (options !== undefined);
+  // Merge task-specific and/or target-specific options with these default values.
+  _.merge(defaultOptions, options);
 
   return function(reports){
 
@@ -11,7 +18,11 @@ module.exports = function markThresholds (options){
     }
 
     return reports.map(function(report){
-      report.isThresholdPassed = hasOptions ? (report.complexity > options.complexity) : false;
+      report.isThresholdPassed = (
+        (+report.complexity > +defaultOptions.complexity) ||
+        (+report.maintainability < +defaultOptions.maintainability) ||
+        (+report.lineNumber > +defaultOptions.lineNumber)
+      );
       return report;
     });
 

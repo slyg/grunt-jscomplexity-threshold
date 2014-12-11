@@ -15,9 +15,17 @@ module.exports = function displayResults (scanReports){
       if (
         scanReport.path !== undefined &&
         scanReport.complexity !== undefined &&
+        scanReport.maintainability !== undefined &&
+        scanReport.lineNumber !== undefined &&
         scanReport.isThresholdPassed !== undefined
       ) {
-        reporter.add(scanReport.path, scanReport.complexity, scanReport.isThresholdPassed);
+        reporter.add(
+          scanReport.path,
+          scanReport.complexity,
+          scanReport.maintainability,
+          scanReport.lineNumber,
+          scanReport.isThresholdPassed
+        );
       }
     });
 

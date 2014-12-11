@@ -9,6 +9,8 @@ describe 'the render module', ->
   VALID_SINGLE_PARAMETERS = [
     path: '/some/path/to/file.js'
     complexity: 100
+    maintainability: 100
+    lineNumber: 100
     isThresholdPassed: false
   ]
 
@@ -16,27 +18,50 @@ describe 'the render module', ->
     {
       path: '/some/path/to/file.js'
       complexity: 100
+      maintainability: 50
+      lineNumber: 80
       isThresholdPassed: false
     }
     {
       path: '/some/path/to/other/file.js'
       complexity: 150
+      maintainability: 50
+      lineNumber: 80
       isThresholdPassed: true
     }
     {
       path: '/some/path/to/yet/another/file.js'
       complexity: 120
+      maintainability: 50
+      lineNumber: 80
       isThresholdPassed: true
     }
   ]
 
-  INVALID_PARAMETERS = [
+  INCOMPLETE_PARAMETERS = [
     {
       path: '/some/path/to/file.js'
     }
     {
+      path: '/some/path/to/file.js'
+      complexity: 120
+    }
+    {
+      path: '/some/path/to/file.js'
+      complexity: 120
+      maintainability: 50
+    }
+    {
+      path: '/some/path/to/file.js'
+      complexity: 120
+      maintainability: 50
+      lineNumber: 80
+    }
+    {
       path: '/some/path/to/yet/another/file.js'
       complexity: 120
+      maintainability: 50
+      lineNumber: 80
       isThresholdPassed: true
     }
   ]
@@ -65,11 +90,13 @@ describe 'the render module', ->
     module.__set__ 'Reporter', ReporterMock
     module []
 
-  it 'should add <path>, <complexity> and <isThresholdPassed> properties to reporter from passed array', (done) ->
+  it 'should add <path>, <complexity>, <maintainability>, <lineNumber> and <isThresholdPassed> properties to reporter from passed array', (done) ->
 
-    ReporterMock::add = (path, complexity, isThresholdPassed) ->
+    ReporterMock::add = (path, complexity, maintainability, lineNumber, isThresholdPassed) ->
       expect(path).to.eql VALID_SINGLE_PARAMETERS[0].path
       expect(complexity).to.eql VALID_SINGLE_PARAMETERS[0].complexity
+      expect(maintainability).to.eql VALID_SINGLE_PARAMETERS[0].maintainability
+      expect(lineNumber).to.eql VALID_SINGLE_PARAMETERS[0].lineNumber
       expect(isThresholdPassed).to.eql VALID_SINGLE_PARAMETERS[0].isThresholdPassed
       done()
 
@@ -79,7 +106,7 @@ describe 'the render module', ->
 
     complexityOrder = []
 
-    ReporterMock::add = (path, complexity, isThresholdPassed) ->
+    ReporterMock::add = (path, complexity, maintainability, lineNumber, isThresholdPassed) ->
       complexityOrder.push complexity
 
     ReporterMock::render = ->
@@ -96,14 +123,14 @@ describe 'the render module', ->
 
     complexityOrder = []
 
-    ReporterMock::add = (path, complexity, isThresholdPassed) ->
+    ReporterMock::add = (path, complexity, maintainability, lineNumber, isThresholdPassed) ->
       complexityOrder.push complexity
 
     ReporterMock::render = ->
       expect(complexityOrder).to.deep.eql [120]
       done()
 
-    module INVALID_PARAMETERS
+    module INCOMPLETE_PARAMETERS
 
   it 'should return the rendered output', ->
 

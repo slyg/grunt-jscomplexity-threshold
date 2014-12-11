@@ -3,9 +3,9 @@ var Table = require('cli-table');
 function Reporter(){
 
   this.table = new Table({
-    head: ['File'.white, 'Complexity'.white],
-    colAligns : ['left', 'right'],
-    colWidths: [100, 12],
+    head: ['File'.white, 'Complexity'.white, 'maintainability'.white, 'lineNumber'.white],
+    colAligns : ['left', 'right', 'right', 'right'],
+    colWidths: [70, 12, 22, 12],
     style : {
       compact : true,
       header: 'white'
@@ -16,13 +16,15 @@ function Reporter(){
 
 }
 
-Reporter.prototype.add = function(path, complexity, hasPassedThreshold){
+Reporter.prototype.add = function(path, complexity, maintainability, lineNumber, hasPassedThreshold){
 
   var outputColor = hasPassedThreshold ? 'red' : 'white';
 
   this.table.push([
     ((hasPassedThreshold ? '\u2718' : '\u2714') + '  ' + path)[outputColor],
-    (''+complexity)[outputColor]
+    (''+complexity)[outputColor],
+    (''+maintainability)[outputColor],
+    (''+lineNumber)[outputColor]
   ]);
 
 };
